@@ -11,7 +11,7 @@ def get_move(player, board):
         move = int(input(f"Игрок {player}, введите номер клетки (1-9): ")) - 1
         if move < 0 or move > 8:
             print("Неверное число. Только (1-9)")
-        elif board[move] != " ":
+        elif not str(board[move]).isdigit():
             print("Это место уже занято, пожалуйста, попробуйте еще раз.")
         else:
             return move
@@ -19,20 +19,20 @@ def get_move(player, board):
 
 def check_win(board):
     for i in range(0, 9, 3):
-        if board[i] == board[i + 1] == board[i + 2] != " ":
+        if board[i] == board[i + 1] == board[i + 2]:
             return True
     for i in range(3):
-        if board[i] == board[i + 3] == board[i + 6] != " ":
+        if board[i] == board[i + 3] == board[i + 6]:
             return True
-    if board[0] == board[4] == board[8] != " ":
+    if board[0] == board[4] == board[8]:
         return True
-    if board[2] == board[4] == board[6] != " ":
+    if board[2] == board[4] == board[6]:
         return True
     return False
 
 
 def play_game():
-    board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+    board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     print_board(board)
     player = "X"
     while True:
@@ -42,7 +42,7 @@ def play_game():
         if check_win(board):
             print(f"Игрок {player} победил!")
             break
-        if " " not in board:
+        if all(type(x) is str for x in board):
             print("Ничья")
             break
         player = "O" if player == "X" else "X"
